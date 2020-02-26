@@ -18,3 +18,5 @@ after_success:
     - docker push ccanning2/multi-nginx
     - docker push ccanning2/multi-server
     - docker push ccanning2/multi-worker
+
+language: generic
