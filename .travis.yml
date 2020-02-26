@@ -3,19 +3,18 @@ services:
     - docker
 
 before_install:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker build -t ccanning2/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true ccanning2/react-test
+    - docker run -e CI=true ccanning2/react-test npm test
 
 after_success:
     - docker build -t ccanning2/multi-client ./client
     - docker build -t ccanning2/multi-nginx ./nginx
     - docker build -t ccanning2/multi-server ./server
     - docker build -t ccanning2/multi-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     - docker push ccanning2/multi-client
     - docker push ccanning2/multi-nginx
     - docker push ccanning2/multi-server
     - docker push ccanning2/multi-worker
-
-language: generic
