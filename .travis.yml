@@ -2,9 +2,6 @@ sudo: required
 services:
     - docker
 
-before_install:
-    - docker build -t ccanning2/react-test -f ./client/Dockerfile.dev ./client
-
 script:
     - docker run -e CI=true ccanning2/react-test npm test
 
